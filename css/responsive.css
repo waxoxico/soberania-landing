@@ -1,0 +1,59 @@
+/* SoberanIA · landing — puntos de quiebre.
+   El diseño de escritorio vive en los estilos en línea de index.html; aquí sólo se ajusta para pantallas angostas.
+   Cada bloque se engancha con un atributo data-r="…" puesto en index.html. */
+
+@media (max-width: 1080px) {
+  [data-r="nav"] { gap: 16px !important; }
+}
+
+@media (max-width: 960px) {
+  [data-r="page"] { padding: 0 24px !important; }
+  [data-r="nav"] { display: none !important; }
+  [data-r="theme"] { margin-left: auto !important; }
+  [data-r="hero"] { padding-top: 64px !important; }
+  [data-r="section"] { padding-top: 88px !important; }
+  [data-r="h2"] { font-size: clamp(28px, 5.6vw, 42px) !important; }
+
+  /* Dos columnas → una */
+  [data-r="stack"] { grid-template-columns: minmax(0, 1fr) !important; gap: 32px !important; }
+
+  /* Tres columnas → filas */
+  [data-r="cols3"] { grid-template-columns: minmax(0, 1fr) !important; }
+  [data-r="cols3"] > * { padding: 20px 0 !important; border-left: 0 !important; border-top: 1px solid var(--line-soft) !important; }
+  [data-r="cols3"] > *:first-child { border-top: 0 !important; }
+
+  /* Consola: el esquema baja bajo la respuesta */
+  [data-r="console"] { grid-template-columns: minmax(0, 1fr) !important; min-height: 0 !important; }
+  [data-r="console"] > aside, [data-r="console"] > *:last-child { border-left: 0 !important; border-top: 1px solid var(--line) !important; }
+
+  /* Preguntas frecuentes: pregunta arriba, respuesta debajo */
+  [data-r="faqs"] > * { flex-wrap: wrap !important; }
+  [data-r="faq-q"] { flex: 1 1 calc(100% - 34px) !important; padding-right: 0 !important; }
+  [data-r="faq-a"] { flex: 1 1 100% !important; padding-left: 34px !important; margin-top: 10px !important; }
+}
+
+@media (max-width: 640px) {
+  [data-r="page"] { padding: 0 18px !important; }
+  [data-r="header"] { gap: 12px !important; padding-top: 18px !important; }
+  [data-r="brand-rule"], [data-r="brand-strap"] { display: none !important; }
+  [data-r="head-cta"] { padding: 10px 12px !important; font-size: 10.5px !important; letter-spacing: 0.04em !important; }
+  [data-r="h1"] { font-size: clamp(40px, 12vw, 60px) !important; margin-top: 20px !important; }
+  [data-r="hero"] [data-r="cols3"] { margin-top: 44px !important; }
+  [data-r="section"] { padding-top: 72px !important; }
+  [data-r="console-main"] { padding: 18px 16px 22px !important; }
+  [data-r="console"] > aside, [data-r="console"] > *:last-child { padding: 18px 16px 22px !important; }
+
+  /* Mapa orbital: se encoge entero para que quepan las órbitas */
+  [data-r="orbit"] { zoom: 0.74; height: 460px !important; }
+
+  /* Plancha de roles: se desplaza de lado en vez de aplastarse */
+  [data-r="plate-card"] { padding: 16px 14px 18px !important; overflow-x: auto !important; }
+  [data-r="plate"] { min-width: 460px; }
+
+  [data-r="faq-q"] { font-size: 18px !important; }
+  [data-r="faq-a"] { padding-left: 0 !important; font-size: 15px !important; }
+}
+
+@media (max-width: 380px) {
+  [data-r="head-cta"] { display: none !important; }
+}

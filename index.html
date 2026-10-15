@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SoberanIA · consulta documental que no sale de su red</title>
+<meta name="description" content="SoberanIA responde preguntas sobre los documentos de su empresa en segundos, citando el archivo y la página, sin que nada salga de su red. Acceso por roles y bitácora de cada consulta.">
+<meta name="theme-color" content="#141313">
+<link rel="canonical" href="https://soberania.cl/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:site_name" content="SoberanIA">
+<meta property="og:url" content="https://soberania.cl/">
+<meta property="og:title" content="SoberanIA · consulta documental que no sale de su red">
+<meta property="og:description" content="Pregunte a los documentos de su empresa y reciba la respuesta con su fuente, en segundos. Todo corre en su servidor: nada sale a internet.">
+<meta property="og:image" content="https://soberania.cl/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SoberanIA · La información se consulta donde vive.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SoberanIA · consulta documental que no sale de su red">
+<meta name="twitter:description" content="Pregunte a los documentos de su empresa y reciba la respuesta con su fuente, en segundos. Todo corre en su servidor: nada sale a internet.">
+<meta name="twitter:image" content="https://soberania.cl/og-image.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/Spectral-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/responsive.css">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<template id="__bundler_thumbnail" data-bg-color="#141313">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#141313"></rect>
+    <g transform="translate(392 293) scale(3.1)">
+      <g fill="#f2efec"><rect x="2" y="8" width="42" height="22"></rect><rect x="2" y="64" width="42" height="26"></rect></g>
+      <rect x="8" y="36" width="42" height="22" fill="#e33b45"></rect>
+      <path d="M96 8 L136 90 H114 L108 77 H84 L78 90 H56 Z" fill="#f2efec"></path>
+      <circle cx="96" cy="42" r="7" fill="#141313"></circle>
+      <path d="M92.5 46 h7 l2.5 14 h-12 Z" fill="#141313"></path>
+    </g>
+  </svg>
+</template>
+
+<template id="leeme-soberania">
+LEEME — SoberanIA (este bloque no se muestra en pantalla)
+
+QUÉ ES
+Infraestructura local de IA que consulta el repositorio documental interno de una empresa B2B. Acceso por roles, cumplimiento de la Ley 21.719 de datos personales y respuestas siempre con evidencia citada. La información nunca sale de la red de la empresa.
+
+ARCHIVOS
+- SoberanIA - Landing.html: página pública del producto.
+- SoberanIA - Consola (prototipo).html: prototipo navegable (portada, acceso, topología, consulta, explorador, bitácora, administración).
+
+CREDENCIALES DE PRUEBA
+- admin / 123: Administrador.
+- user / 123: Operaciones (usuario común).
+- Código de verificación en dos pasos: 428913.
+- Bloqueo a los 3 intentos fallidos (30 s, queda en bitácora).
+
+QUIÉN PUEDE VER QUÉ
+Regla: un documento se ve sólo si su área está en el rol Y su clasificación no supera el máximo del rol.
+Áreas: Finanzas, Legal, Personas, Operaciones, Comercial.
+Clasificación: Público, Interno, Restringido.
+
+Roles (áreas → clasificación máxima):
+- Administrador: todas → Restringido. Administra usuarios, roles y permisos.
+- Gerencia General: todas → Restringido.
+- Finanzas: Finanzas, Comercial → Interno.
+- Legal y Cumplimiento: Legal, Personas → Restringido.
+- Personas: Personas → Interno.
+- Operaciones: Operaciones, Comercial → Interno.
+
+El usuario común VE:
+- El mapa (topología) con sus carpetas en negro y su nombre siempre visible.
+- La ventana de consulta de sus carpetas, con evidencia citada.
+- El visor de archivos, limitado a lo que alcanza.
+
+El usuario común NO VE:
+- Los nombres de las carpetas ajenas: aparecen en rojo, translúcidas, al fondo, sin nombre, volumen ni áreas.
+- Los archivos ajenos: aparecen tachados con una trama roja; título, área y formato figuran como "no divulgado".
+- El panel documental, la bitácora completa ni la administración. Para él esas secciones no existen.
+- El contenido retenido: si pregunta algo fuera de su alcance, el sistema dice que la evidencia existe pero no la resume, y deja la solicitud en bitácora.
+
+Sólo el administrador VE:
+- El panel documental, la bitácora (inalterable, pensada para auditoría) y la administración.
+- En administración, arriba están las personas (alta, baja y rol asignado) y abajo la plancha de alcance (matriz de rol × área).
+
+RED Y VPN
+Fijado:
+- El servidor (andes-01 en la demo) está dentro de la red de la empresa.
+- Sin conexión saliente a internet.
+- El proveedor no tiene acceso remoto, salvo que el área de TI del cliente abra una ventana de soporte y la cierre después.
+- Los respaldos con datos personales se guardan cifrados en el servidor local.
+Por definir:
+- El acceso desde fuera de la oficina: sólo a través de la VPN corporativa del cliente, nunca con un servicio en la nube del proveedor.
+- Si la VPN corre por cuenta del cliente.
+- Si algunos roles o la clasificación Restringida exigen estar en la red interna, incluso con VPN.
+- Si el origen de la conexión (oficina / VPN) se registra en la bitácora.
+- La restricción por estación de trabajo.
+
+MARCA (fijada, no cambiar)
+- Nombre: SoberanIA (junto).
+- Paleta: sólo blanco, negro y rojo. Claro: #ffffff, #141313, #b3121f. Oscuro: #111010, #f2efec, #e33b45. Negro = lo consultable y las acciones; rojo = restricción y bloqueo. Sin cian, magenta, verde, azul ni amarillo.
+- Tipografía: Spectral (documento), Archivo (interfaz), IBM Plex Mono (rótulos y localizadores).
+- Controles rectos, sin bordes redondeados ni sombras.
+
+NOTAS
+- Los datos son de demostración y viven en el navegador (localStorage).
+- La empresa es ficticia: Grupo Andes Logística.
+</template>
+
+<helmet>
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #141313;
+    --red: #b3121f;
+    --line: rgba(20, 19, 19, 0.16);
+    --line-soft: rgba(20, 19, 19, 0.09);
+    --muted: rgba(20, 19, 19, 0.58);
+    --wash: rgba(20, 19, 19, 0.04);
+  }
+  html[data-theme="dark"] {
+    --paper: #111010;
+    --ink: #f2efec;
+    --red: #e33b45;
+    --line: rgba(242, 239, 236, 0.2);
+    --line-soft: rgba(242, 239, 236, 0.11);
+    --muted: rgba(242, 239, 236, 0.6);
+    --wash: rgba(242, 239, 236, 0.05);
+  }
+  html { scrollbar-gutter: stable; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Archivo', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  * { box-sizing: border-box; }
+  a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+  a:hover { color: var(--red); border-bottom-color: var(--red); }
+  button, input, textarea, select { font-family: inherit; }
+  :focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+  ::selection { background: var(--red); color: var(--paper); }
+  @keyframes lpRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes lpFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes lpBlink { 0%, 45% { opacity: 1; } 55%, 100% { opacity: 0; } }
+  @keyframes lpDraw { from { stroke-dashoffset: 340; } to { stroke-dashoffset: 0; } }
+  @keyframes lpPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+  @keyframes lpSweep { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes lpSpin { to { transform: rotate(360deg); } }
+  @keyframes lpSpinBack { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+  @keyframes lpBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+  @keyframes lpInk { 0%, 100% { opacity: 1; } 50% { opacity: 0.78; } }
+  @keyframes lpScan { 0% { transform: translateY(-10%); opacity: 0; } 12%, 88% { opacity: 1; } 100% { transform: translateY(430%); opacity: 0; } }
+</style>
+</helmet>
+
+<div data-r="page" style="max-width:1240px;margin:0 auto;padding:0 34px">
+
+  <header data-r="header" style="display:flex;align-items:center;gap:26px;padding:26px 0 0">
+    <div style="display:flex;align-items:center;gap:15px;flex:none">
+      <div style="width:52px;height:52px;flex:none;background:var(--ink);display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 138 100" style="width:36px;height:26px" aria-label="SoberanIA">
+          <g fill="var(--paper)"><rect x="2" y="8" width="42" height="22"></rect><rect x="2" y="64" width="42" height="26"></rect></g>
+          <rect x="8" y="36" width="42" height="22" fill="var(--red)"></rect>
+          <path d="M96 8 L136 90 H114 L108 77 H84 L78 90 H56 Z" fill="var(--paper)"></path>
+          <circle cx="96" cy="42" r="7" fill="var(--ink)"></circle>
+          <path d="M92.5 46 h7 l2.5 14 h-12 Z" fill="var(--ink)"></path>
+        </svg>
+      </div>
+      <div data-r="brand-rule" style="width:1px;height:38px;background:var(--line)"></div>
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <div style="font-family:'Spectral',serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;line-height:1">SoberanIA</div>
+        <div data-r="brand-strap" style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.13em;color:var(--muted)">inteligencia documental en sitio</div>
+      </div>
+    </div>
+
+    <nav data-r="nav" style="display:flex;align-items:center;gap:24px;margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em">
+      <a href="#como" style="border:0">cómo funciona</a>
+      <a href="#confianza" style="border:0">roles y ley</a>
+      <a href="#preguntas" style="border:0">preguntas</a>
+    </nav>
+
+    <div data-r="theme" style="display:flex;height:32px;border:1px solid var(--line);flex:none">
+      <button type="button" onClick="{{ setLight }}" aria-label="Modo claro" style="{{ lightBtnStyle }}">
+        <svg viewBox="0 0 24 24" style="width:15px;height:15px;display:block" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.6" fill="currentColor"></circle>
+          <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1.6V4"></path><path d="M12 20v2.4"></path><path d="M1.6 12H4"></path><path d="M20 12h2.4"></path><path d="M4.6 4.6l1.7 1.7"></path><path d="M17.7 17.7l1.7 1.7"></path><path d="M19.4 4.6l-1.7 1.7"></path><path d="M6.3 17.7l-1.7 1.7"></path></g>
+        </svg>
+      </button>
+      <button type="button" onClick="{{ setDark }}" aria-label="Modo oscuro" style="{{ darkBtnStyle }}">
+        <svg viewBox="0 0 24 24" style="width:15px;height:15px;display:block" aria-hidden="true">
+          <path d="M20 14.2A8.4 8.4 0 0 1 9.8 4a8.6 8.6 0 1 0 10.2 10.2z" fill="currentColor"></path>
+        </svg>
+      </button>
+    </div>
+
+    <a data-r="head-cta" href="#contacto" style="flex:none;border:0;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;padding:11px 18px" style-hover="background:var(--red);color:var(--paper)">agendar demostración</a>
+  </header>
+
+  <section data-r="hero" style="padding:96px 0 0;animation:lpRise 0.7s cubic-bezier(0.2,0.7,0.2,1) both">
+    <div style="display:flex;align-items:center;gap:13px">
+      <span style="width:44px;height:4px;background:var(--red)"></span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.17em;text-transform:uppercase;color:var(--red)">infraestructura local de ia documental</span>
+    </div>
+
+    <h1 data-r="h1" style="font-family:'Spectral',serif;font-size:min(8.2vw, 108px);font-weight:600;line-height:1.02;letter-spacing:-0.035em;margin:26px 0 0;max-width:19ch;text-wrap:balance">La información se consulta donde vive.</h1>
+
+    <div data-r="stack" style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);gap:44px;margin-top:40px;align-items:end">
+      <p style="font-family:'Spectral',serif;font-size:22px;line-height:1.55;margin:0;max-width:46ch;color:var(--ink);text-wrap:pretty">Su repositorio interno responde preguntas en segundos, sin que un solo documento salga de la red de la empresa. Cada respuesta cita el archivo y la página de donde salió. Si no hay fuente, no hay respuesta.</p>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="#contacto" style="border:0;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;padding:15px 24px" style-hover="background:var(--red);color:var(--paper)">agendar demostración</a>
+          <a href="#demo" style="border:1px solid var(--line);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;padding:15px 24px" style-hover="border-color:var(--red);color:var(--red)">ver la consola</a>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--muted)">30 minutos con su propio repositorio de prueba</div>
+      </div>
+    </div>
+
+    <div data-r="cols3" style="display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:0;margin-top:64px;border-top:2px solid var(--ink)">
+      <sc-for list="{{ heroFacts }}" as="f" hint-placeholder-count="3">
+        <div style="{{ f.style }}">
+          <div style="font-family:'Spectral',serif;font-size:17px;font-weight:600;line-height:1.35">{{ f.k }}</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--muted);margin-top:7px;max-width:34ch">{{ f.v }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-r="section" id="como" style="padding:120px 0 0">
+    <div data-r="stack" style="display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:56px;align-items:start">
+
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">el problema</div>
+        <h2 data-r="h2" style="font-family:'Spectral',serif;font-size:min(4.4vw, 46px);font-weight:600;line-height:1.12;letter-spacing:-0.025em;margin:14px 0 0;max-width:18ch;text-wrap:balance">Nadie encuentra el documento que decide.</h2>
+        <p style="font-family:'Spectral',serif;font-size:17px;line-height:1.62;color:var(--muted);margin:20px 0 0;max-width:40ch">El contrato existe. El informe existe. Están en un servidor, en una carpeta que alguien nombró en 2019, y la gerencia toma la decisión sin ellos porque buscarlos cuesta dos días. Subirlos a una nube ajena no es opción: son datos personales y contratos con cláusulas de confidencialidad.</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:26px;padding:13px 15px;border:1px solid var(--red)">
+          <span style="width:7px;height:7px;flex:none;background:var(--red)"></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--ink)">ningún documento sale a internet</span>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">cómo funciona</div>
+        <div style="margin-top:18px;border-top:2px solid var(--ink)">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+            <div style="{{ s.style }}">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--red);width:34px;flex:none;padding-top:4px">{{ s.n }}</div>
+              <div style="min-width:0">
+                <div style="font-family:'Spectral',serif;font-size:21px;font-weight:600;line-height:1.3">{{ s.k }}</div>
+                <div style="font-size:14px;line-height:1.6;color:var(--muted);margin-top:8px;max-width:52ch">{{ s.v }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-r="section" id="demo" style="padding:120px 0 0">
+    <div style="display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">la consola, en vivo</div>
+        <h2 data-r="h2" style="font-family:'Spectral',serif;font-size:min(4.4vw, 46px);font-weight:600;line-height:1.12;letter-spacing:-0.025em;margin:14px 0 0;max-width:24ch;text-wrap:balance">Una pregunta corriente, una respuesta con su fuente.</h2>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <span style="{{ demoDotStyle }}"></span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--muted)">{{ demoPhaseLabel }}</span>
+      </div>
+    </div>
+
+    <div style="margin-top:30px;border:1px solid var(--line);background:var(--paper);box-shadow:0 24px 60px rgba(0,0,0,0.09)">
+
+      <div style="display:flex;align-items:center;gap:13px;padding:11px 15px;background:var(--ink);color:var(--paper)">
+        <svg viewBox="0 0 138 100" style="width:24px;height:17px;flex:none" aria-hidden="true">
+          <g fill="var(--paper)"><rect x="2" y="8" width="42" height="22"></rect><rect x="2" y="64" width="42" height="26"></rect></g>
+          <rect x="8" y="36" width="42" height="22" fill="var(--red)"></rect>
+          <path d="M96 8 L136 90 H114 L108 77 H84 L78 90 H56 Z" fill="var(--paper)"></path>
+          <circle cx="96" cy="42" r="7" fill="var(--ink)"></circle>
+          <path d="M92.5 46 h7 l2.5 14 h-12 Z" fill="var(--ink)"></path>
+        </svg>
+        <span style="font-family:'Spectral',serif;font-weight:600;font-size:14px">Consulta · Grupo Andes Logística</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;opacity:0.6">andes-01 · red cerrada</span>
+      </div>
+
+      <div data-r="console" style="display:grid;grid-template-columns:minmax(0,1fr) 330px;min-height:530px">
+
+        <div data-r="console-main" style="padding:26px 28px 30px;min-width:0">
+          <div style="display:flex;align-items:center;gap:9px">
+            <span style="width:5px;height:5px;flex:none;background:var(--red)"></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--muted)">escriba su pregunta en palabras corrientes</span>
+          </div>
+
+          <div style="margin-top:12px;padding:16px 16px 18px;border:1px solid var(--line);background:var(--wash);min-height:96px">
+            <span style="font-family:'Spectral',serif;font-size:23px;line-height:1.4">{{ demoTyped }}</span>
+            <span style="{{ demoCaretStyle }}"></span>
+          </div>
+
+          <sc-if value="{{ demoThinking }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:11px;margin-top:22px;animation:lpFade 0.25s ease-out both">
+              <span style="width:7px;height:7px;background:var(--red);animation:lpPulse 1s ease-in-out infinite"></span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--muted)">leyendo 3 documentos dentro de su alcance…</span>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ demoAnswered }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:26px;animation:lpRise 0.5s cubic-bezier(0.2,0.7,0.2,1) both">
+              <div style="height:2px;background:var(--ink);transform-origin:left;animation:lpSweep 0.5s cubic-bezier(0.2,0.7,0.2,1) both"></div>
+              <p style="font-family:'Spectral',serif;font-size:19px;line-height:1.55;margin:18px 0 0;text-wrap:pretty">{{ demoAnswer }}</p>
+
+              <div style="margin-top:24px;padding-top:14px;border-top:1px solid var(--line-soft)">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)">evidencia citada</div>
+                <div style="display:flex;flex-wrap:wrap;gap:14px 26px;margin-top:12px">
+                  <sc-for list="{{ demoSources }}" as="src" hint-placeholder-count="2">
+                    <div style="{{ src.style }}">
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:var(--red)">{{ src.locator }}</span>
+                      <span style="font-family:'Spectral',serif;font-size:12.5px;line-height:1.35;color:var(--muted)">{{ src.title }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <aside style="border-left:1px solid var(--line);padding:22px 20px 26px;min-width:0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)">de dónde salió</div>
+
+          <sc-if value="{{ demoPending }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:11px;margin-top:18px">
+              <sc-for list="{{ demoSkeleton }}" as="sk" hint-placeholder-count="4">
+                <div style="{{ sk.style }}"></div>
+              </sc-for>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.6;letter-spacing:0.06em;color:var(--muted);margin-top:6px">{{ demoPendingNote }}</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ demoAnswered }}" hint-placeholder-val="{{ true }}">
+            <svg viewBox="0 0 306 300" style="width:100%;height:auto;margin-top:16px" aria-label="Esquema de la consulta">
+              <g stroke="var(--red)" stroke-width="1.4" fill="none" stroke-dasharray="340" style="animation:lpDraw 1.1s cubic-bezier(0.4,0,0.3,1) 0.15s both">
+                <path d="M48 44 V96"></path>
+                <path d="M48 96 H258"></path>
+                <path d="M48 96 V150"></path>
+                <path d="M153 96 V150"></path>
+                <path d="M258 96 V150"></path>
+                <path d="M48 194 V232"></path>
+                <path d="M153 194 V232"></path>
+                <path d="M258 194 V232"></path>
+                <path d="M48 232 H258"></path>
+                <path d="M153 232 V262"></path>
+              </g>
+
+              <g style="animation:lpFade 0.4s ease-out both">
+                <rect x="8" y="16" width="132" height="28" fill="var(--ink)"></rect>
+                <text x="20" y="35" fill="var(--paper)" style="font-family:'IBM Plex Mono',monospace;font-size:11px">su pregunta</text>
+              </g>
+
+              <g style="animation:lpFade 0.4s ease-out 0.9s both">
+                <sc-for list="{{ demoNodes }}" as="n" hint-placeholder-count="3">
+                  <g>
+                    <rect x="{{ n.x }}" y="150" width="80" height="44" fill="none" stroke="var(--ink)" stroke-width="1.4"></rect>
+                    <rect x="{{ n.x }}" y="150" width="80" height="7" fill="var(--red)"></rect>
+                    <text x="{{ n.tx }}" y="174" fill="var(--ink)" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px">{{ n.label }}</text>
+                    <text x="{{ n.tx }}" y="187" fill="var(--ink)" opacity="0.55" style="font-family:'IBM Plex Mono',monospace;font-size:8.5px">{{ n.page }}</text>
+                  </g>
+                </sc-for>
+              </g>
+
+              <g style="animation:lpFade 0.4s ease-out 1.5s both">
+                <rect x="87" y="262" width="132" height="28" fill="var(--red)"></rect>
+                <text x="99" y="281" fill="#ffffff" style="font-family:'IBM Plex Mono',monospace;font-size:11px">respuesta citada</text>
+              </g>
+            </svg>
+
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.6;letter-spacing:0.06em;color:var(--muted);margin-top:14px">el esquema se arma con los documentos que su rol alcanza · el resto no se lee ni se resume</div>
+          </sc-if>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section data-r="section" id="mapa" style="padding:120px 0 0">
+    <div data-r="stack" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:52px;align-items:start">
+
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">el acervo, como se ve desde su rol</div>
+        <h2 data-r="h2" style="font-family:'Spectral',serif;font-size:min(4.4vw, 44px);font-weight:600;line-height:1.12;letter-spacing:-0.025em;margin:14px 0 0;max-width:20ch;text-wrap:balance">Lo que no le corresponde ni siquiera tiene nombre.</h2>
+        <p style="font-family:'Spectral',serif;font-size:17px;line-height:1.62;color:var(--muted);margin:18px 0 0;max-width:40ch">Al entrar, cada persona ve su repositorio como un mapa: el núcleo local al centro y las carpetas en órbita. Las negras son las que alcanza —con su nombre siempre a la vista—; las rojas existen, pero se quedan al fondo, traslúcidas y sin nombre.</p>
+
+
+
+        <div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:20px">
+          <div style="display:flex;align-items:center;gap:9px">
+            <span style="width:13px;height:13px;background:var(--ink)"></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:var(--muted)">con acceso</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <span style="width:13px;height:13px;border:1px solid var(--red);background:rgba(179,18,31,0.16)"></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:var(--muted)">fuera de alcance</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-r="orbit" style="position:relative;height:430px;border:1px solid var(--line);background:var(--wash);overflow:hidden">
+        <sc-for list="{{ orbits }}" as="o" hint-placeholder-count="3">
+          <div style="{{ o.ringStyle }}">
+            <sc-for list="{{ o.nodes }}" as="n" hint-placeholder-count="4">
+              <div style="{{ n.wrapStyle }}">
+                <div style="{{ n.spinStyle }}">
+                  <div style="{{ n.uprightStyle }}">
+                    <div style="{{ n.contentStyle }}">
+                      <div style="{{ n.dotStyle }}"></div>
+                      <span style="{{ n.labelStyle }}">{{ n.label }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:9px">
+          <div style="width:62px;height:62px;background:var(--ink);display:flex;align-items:center;justify-content:center;animation:lpBreathe 3.6s ease-in-out infinite">
+            <svg viewBox="0 0 138 100" style="width:38px;height:28px" aria-hidden="true">
+              <g fill="var(--paper)"><rect x="2" y="8" width="42" height="22"></rect><rect x="2" y="64" width="42" height="26"></rect></g>
+              <rect x="8" y="36" width="42" height="22" fill="var(--red)"></rect>
+              <path d="M96 8 L136 90 H114 L108 77 H84 L78 90 H56 Z" fill="var(--paper)"></path>
+              <circle cx="96" cy="42" r="7" fill="var(--ink)"></circle>
+              <path d="M92.5 46 h7 l2.5 14 h-12 Z" fill="var(--ink)"></path>
+            </svg>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:var(--muted)">andes-01</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-r="section" id="confianza" style="padding:120px 0 0">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">por qué su empresa puede instalarlo</div>
+    <h2 data-r="h2" style="font-family:'Spectral',serif;font-size:min(4.4vw, 46px);font-weight:600;line-height:1.12;letter-spacing:-0.025em;margin:14px 0 34px;max-width:26ch;text-wrap:balance">Tres áreas tienen que decir que sí. Las tres tienen su respuesta.</h2>
+
+    <div data-r="stack" style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:44px;align-items:start;margin-bottom:44px">
+      <div data-r="plate-card" style="border:1px solid var(--line);padding:20px 22px 24px;position:relative;overflow:hidden">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)">plancha de alcance</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.06em;color:var(--muted)">rol × área</span>
+        </div>
+
+        <div data-r="plate" style="display:grid;grid-template-columns:130px repeat(5, minmax(0,1fr));margin-top:16px;border:2px solid var(--ink)">
+          <div style="grid-column:1 / -1;display:grid;grid-template-columns:130px repeat(5, minmax(0,1fr));background:var(--ink);color:var(--paper)">
+            <div style="padding:9px 11px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.62">rol</div>
+            <sc-for list="{{ plateCols }}" as="col" hint-placeholder-count="5">
+              <div style="padding:9px 4px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.06em">{{ col }}</div>
+            </sc-for>
+          </div>
+          <sc-for list="{{ plateRows }}" as="row" hint-placeholder-count="4">
+            <div style="{{ row.style }}">
+              <div style="display:flex;align-items:center;padding:0 11px;font-family:'Spectral',serif;font-weight:600;font-size:13px;white-space:nowrap">{{ row.name }}</div>
+              <sc-for list="{{ row.cells }}" as="cell" hint-placeholder-count="5">
+                <div style="{{ cell.style }}">
+                  <sc-if value="{{ cell.on }}">
+                    <div style="{{ cell.inkStyle }}"></div>
+                  </sc-if>
+                  <sc-if value="{{ cell.dash }}">
+                    <div style="width:12px;height:2px;background:var(--muted)"></div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+
+        
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <p style="font-family:'Spectral',serif;font-size:16px;line-height:1.6;color:var(--muted);margin:0">El administrador entinta o cala un cuadro y el alcance de todo un rol cambia en el acto. Lo entintado se puede consultar; lo que queda vacío no se lee, no se resume y no se cita.</p>
+        <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:9px">
+            <span style="width:14px;height:14px;background:var(--ink)"></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">con acceso</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <span style="width:14px;height:14px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center"><span style="width:8px;height:2px;background:var(--muted)"></span></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">sin acceso</span>
+          </div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.6;letter-spacing:0.06em;color:var(--muted)">cada cambio queda en bitácora con hora, persona y estación</div>
+      </div>
+    </div>
+
+    <div data-r="cols3" style="display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:0;border-top:2px solid var(--ink)">
+      <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="3">
+        <div style="{{ p.style }}">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--red)">{{ p.who }}</div>
+          <div style="font-family:'Spectral',serif;font-size:23px;font-weight:600;line-height:1.25;letter-spacing:-0.015em;margin-top:12px">{{ p.title }}</div>
+          <p style="font-size:14px;line-height:1.65;color:var(--muted);margin:14px 0 0">{{ p.body }}</p>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:20px">
+            <sc-for list="{{ p.items }}" as="it" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;align-items:baseline">
+                <span style="width:5px;height:5px;flex:none;margin-top:6px;background:var(--ink)"></span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;color:var(--ink)">{{ it }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-r="section" id="preguntas" style="padding:120px 0 0">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">preguntas frecuentes</div>
+    <h2 data-r="h2" style="font-family:'Spectral',serif;font-size:min(4.4vw, 44px);font-weight:600;line-height:1.12;letter-spacing:-0.025em;margin:14px 0 30px;max-width:22ch;text-wrap:balance">Lo que preguntan antes de dejarnos entrar.</h2>
+
+    <div data-r="faqs" style="border-top:2px solid var(--ink)">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+        <div style="{{ f.style }}">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--red);flex:none;padding-top:5px;width:34px">{{ f.n }}</div>
+          <div data-r="faq-q" style="font-family:'Spectral',serif;font-size:20px;font-weight:600;line-height:1.35;flex:0 0 34%;min-width:0;padding-right:32px;text-wrap:pretty">{{ f.q }}</div>
+          <div data-r="faq-a" style="font-family:'Spectral',serif;font-size:16px;line-height:1.62;color:var(--muted);flex:1;min-width:0;text-wrap:pretty">{{ f.a }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-r="section" id="contacto" style="padding:120px 0 0">
+    <div style="height:5px;background:var(--ink)"></div>
+    <div style="height:1px;background:var(--ink);margin-top:3px"></div>
+
+    <div data-r="stack" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;padding-top:40px;align-items:start">
+      <div>
+        <h2 data-r="h2" style="font-family:'Spectral',serif;font-size:min(5vw, 56px);font-weight:600;line-height:1.06;letter-spacing:-0.03em;margin:0;max-width:15ch;text-wrap:balance">Traiga cien documentos suyos.</h2>
+        <p style="font-family:'Spectral',serif;font-size:18px;line-height:1.6;color:var(--muted);margin:22px 0 0;max-width:40ch">Los indexamos en su propia máquina durante la demostración y pregunta lo que quiera. Si al final del día no encuentra en segundos algo que hoy le toma horas, no seguimos.</p>
+
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:30px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--muted)">
+          <div><a href="https://www.linkedin.com/in/soberan-ia-529a96443/" target="_blank" rel="noopener noreferrer">linkedin.com/in/soberan-ia</a></div>
+          <div>Chile · instalación en sitio</div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px;margin-top:26px">
+          <span style="width:6px;height:6px;background:var(--red)"></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--muted)">equipo de cuatro personas · ingeniería, seguridad y cumplimiento</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;border:2px solid var(--ink);padding:26px 26px 24px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">agende su demostración</div>
+        <div style="font-family:'Spectral',serif;font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-0.015em">Escríbanos por LinkedIn.</div>
+        <div style="font-size:15px;line-height:1.55;color:var(--muted)">Cuéntenos su nombre, cargo, empresa y cuántos documentos tiene, aproximadamente. Coordinamos la fecha por ahí.</div>
+        <a href="https://www.linkedin.com/in/soberan-ia-529a96443/" target="_blank" rel="noopener noreferrer" style="align-self:flex-start;border:0;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;padding:15px 26px" style-hover="background:var(--red);color:var(--paper)">abrir SoberanIA en LinkedIn ↗</a>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.6;letter-spacing:0.06em;color:var(--muted)">usamos sus datos sólo para coordinar la demostración · no se comparten con terceros</div>
+      </div>
+    </div>
+  </section>
+
+  
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;demoVelocidad&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:46,&quot;min&quot;:20,&quot;max&quot;:110,&quot;step&quot;:2,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Demostración&quot;}}">
+const DEMOS = [
+  {
+    q: "¿Qué cláusula de salida tiene el contrato con Transportes Rivera?",
+    a: "El contrato marco con Transportes Rivera permite terminar sin costo con aviso de 90 días. Si la salida ocurre antes de cumplir el primer año, se aplica una multa de 2.400 UF.",
+    sources: [
+      { locator: "§8.2:p11", title: "Contrato marco Transportes Rivera 2026" },
+      { locator: "§3.1:p4", title: "Anexo de penalidades 2026" }
+    ],
+    nodes: [
+      { label: "contrato", page: "p. 11" },
+      { label: "anexo", page: "p. 4" },
+      { label: "acta", page: "p. 2" }
+    ]
+  },
+  {
+    q: "¿Cuánto subió el costo logístico del último trimestre?",
+    a: "El costo logístico del cuarto trimestre subió 7,4 % respecto del tercero, empujado por combustible y por el arriendo de la bodega de San Bernardo.",
+    sources: [
+      { locator: "§2.4:p6", title: "Informe de costos Q4 2025" },
+      { locator: "§5.1:p18", title: "Contrato de arriendo San Bernardo" }
+    ],
+    nodes: [
+      { label: "informe", page: "p. 6" },
+      { label: "arriendo", page: "p. 18" },
+      { label: "planilla", page: "p. 3" }
+    ]
+  }
+];
+
+class Component extends DCLogic {
+  state = { theme: "light", i: 0, chars: 0, phase: "typing", indexed: 0 };
+
+  componentDidMount() {
+    try {
+      const th = localStorage.getItem("soberania-landing-theme");
+      if (th === "dark" || th === "light") this.applyTheme(th);
+      else this.applyTheme("light");
+    } catch (e) { this.applyTheme("light"); }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      this.setState({ chars: DEMOS[0].q.length, phase: "answer" });
+      return;
+    }
+    this.tick();
+  }
+
+  componentWillUnmount() { clearTimeout(this._t); cancelAnimationFrame(this._raf); }
+
+  countUp(target) {
+    const start = performance.now();
+    const step = (now) => {
+      const p = Math.min((now - start) / 1600, 1);
+      this.setState({ indexed: Math.round(target * (1 - Math.pow(1 - p, 3))) });
+      if (p < 1) this._raf = requestAnimationFrame(step);
+    };
+    this._raf = requestAnimationFrame(step);
+  }
+
+  // Un solo reloj: teclea, piensa, muestra la respuesta, y pasa a la siguiente pregunta.
+  tick() {
+    clearTimeout(this._t);
+    const speed = Number(this.props.demoVelocidad) || 46;
+    const { i, chars, phase } = this.state;
+    const q = DEMOS[i].q;
+
+    if (phase === "typing") {
+      if (chars < q.length) {
+        this._t = setTimeout(() => { this.setState({ chars: chars + 1 }); this.tick(); }, speed + (q[chars] === " " ? 34 : 0));
+      } else {
+        this._t = setTimeout(() => { this.setState({ phase: "thinking" }); this.tick(); }, 520);
+      }
+      return;
+    }
+    if (phase === "thinking") {
+      this._t = setTimeout(() => { this.setState({ phase: "answer" }); this.tick(); }, 1150);
+      return;
+    }
+    this._t = setTimeout(() => {
+      this.setState({ i: (i + 1) % DEMOS.length, chars: 0, phase: "typing" });
+      this.tick();
+    }, 7200);
+  }
+
+  applyTheme(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    this.setState({ theme: t });
+  }
+
+  setTheme(t) {
+    try { localStorage.setItem("soberania-landing-theme", t); } catch (e) {}
+    this.applyTheme(t);
+  }
+
+  renderVals() {
+    const st = this.state;
+    const dark = st.theme === "dark";
+    const d = DEMOS[st.i];
+    const typed = d.q.slice(0, st.chars);
+    const answered = st.phase === "answer";
+
+    const btn = (on) => `display:flex;align-items:center;justify-content:center;width:31px;padding:0;line-height:0;cursor:pointer;border:0;` +
+      (on ? `background:var(--ink);color:var(--paper);` : `background:transparent;color:var(--muted);`);
+
+    const cell = (i, cols, extra) =>
+      `padding:22px 26px 26px;` +
+      (i % cols === 0 ? `padding-left:0;` : `border-left:1px solid var(--line-soft);`) +
+      (extra || "");
+
+    return {
+      setLight: () => this.setTheme("light"),
+      setDark: () => this.setTheme("dark"),
+      lightBtnStyle: btn(!dark),
+      darkBtnStyle: btn(dark),
+
+      demoTyped: typed,
+      demoAnswer: d.a,
+      demoAnswered: answered,
+      demoThinking: st.phase === "thinking",
+      demoCaretStyle: answered
+        ? `display:none`
+        : `display:inline-block;width:2px;height:22px;vertical-align:-3px;margin-left:2px;background:var(--red);animation:lpBlink 1s steps(1) infinite`,
+      demoPhaseLabel: st.phase === "typing"
+        ? "escribiendo la consulta"
+        : (st.phase === "thinking" ? "leyendo el repositorio" : "respuesta con evidencia"),
+      demoDotStyle: `width:7px;height:7px;flex:none;background:${answered ? "var(--ink)" : "var(--red)"};` +
+        (answered ? `` : `animation:lpPulse 1.1s ease-in-out infinite`),
+      demoSources: d.sources.map(s => ({
+        locator: s.locator,
+        title: s.title,
+        style: `display:flex;flex-direction:column;gap:4px;padding-left:11px;border-left:2px solid var(--red);min-width:210px`
+      })),
+      demoNodes: d.nodes.map((n, k) => ({
+        label: n.label,
+        page: n.page,
+        x: 8 + k * 105,
+        tx: 18 + k * 105
+      })),
+      // El costado reserva su sitio: sin salto de altura cuando entra el esquema.
+      demoPending: !answered,
+      demoPendingNote: st.phase === "thinking"
+        ? "armando el esquema con los folios que su rol alcanza"
+        : "el esquema aparece cuando la consulta se envía",
+      demoSkeleton: [82, 64, 92, 58].map((w, k) => ({
+        style: `height:${k === 0 ? 26 : 12}px;width:${w}%;background:var(--wash);border-left:2px solid var(--line-soft);animation:lpPulse 1.8s ease-in-out ${(k * 0.16).toFixed(2)}s infinite`
+      })),
+
+
+      // El mapa orbital de la consola, reducido a un diagrama que gira solo.
+      orbits: [
+        { r: 92, dur: 34, nodes: [
+          { label: "Contratos", open: true, a: 20 },
+          { label: "Costos Q4", open: true, a: 140 },
+          { label: "", open: false, a: 260 }
+        ] },
+        { r: 134, dur: 52, nodes: [
+          { label: "Actas", open: true, a: 70 },
+          { label: "", open: false, a: 175 },
+          { label: "Arriendos", open: true, a: 300 }
+        ] },
+        { r: 176, dur: 74, nodes: [
+          { label: "", open: false, a: 32 },
+          { label: "Pólizas", open: true, a: 128 },
+          { label: "", open: false, a: 214 },
+          { label: "", open: false, a: 310 }
+        ] }
+      ].map((o, oi) => ({
+        ringStyle: `position:absolute;left:50%;top:50%;width:${o.r * 2}px;height:${o.r * 2}px;margin:${-o.r}px 0 0 ${-o.r}px;` +
+          `border:1px ${oi === 2 ? "dotted" : "dashed"} var(--line-soft);border-radius:50%;` +
+          `animation:lpSpin ${o.dur}s linear infinite`,
+        nodes: o.nodes.map(n => ({
+          label: n.label,
+          // Tres capas: sitio en la órbita · contra-giro (sólo rotación) · aplome y centrado.
+          wrapStyle: `position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(${n.a}deg) translateX(${o.r}px)`,
+          spinStyle: `position:absolute;left:0;top:0;width:0;height:0;transform:rotate(0deg);animation:lpSpinBack ${o.dur}s linear infinite`,
+          uprightStyle: `position:absolute;left:0;top:0;width:0;height:0;transform:rotate(${-n.a}deg)`,
+          contentStyle: `position:absolute;left:0;top:0;display:flex;align-items:center;gap:8px;white-space:nowrap;transform:translate(-50%,-50%);` +
+            (n.open ? `` : `opacity:0.5;`),
+          dotStyle: n.open
+            ? `width:15px;height:15px;flex:none;background:var(--ink)`
+            : `width:13px;height:13px;flex:none;border:1px solid var(--red);background:rgba(179,18,31,0.16)`,
+          labelStyle: n.open
+            ? `font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.04em;white-space:nowrap;color:var(--ink)`
+            : `display:none`
+        }))
+      })),
+
+      // La plancha de la consola: los cuadros se entintan por turnos, en bucle.
+      plateCols: ["Fin", "Leg", "Ope", "RRHH", "Com"],
+      plateRows: [
+        { name: "Gerencia general", on: [1, 1, 1, 1, 1] },
+        { name: "Finanzas", on: [1, 1, 0, 0, 1] },
+        { name: "Legal", on: [0, 1, 1, 1, 0] },
+        { name: "Operaciones", on: [0, 0, 1, 0, 1] }
+      ].map((r, ri) => ({
+        name: r.name,
+        style: `grid-column:1 / -1;display:grid;grid-template-columns:130px repeat(5, minmax(0,1fr));height:42px;` +
+          (ri ? `border-top:1px solid var(--line-soft);` : ``),
+        cells: r.on.map((on, ci) => ({
+          on: on === 1,
+          // Con acceso: cuadro lleno. Sin acceso: vacío con un guion. Se lee igual en claro y en oscuro.
+          style: `position:relative;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--line-soft);`,
+          dash: on !== 1,
+          inkStyle: `position:absolute;inset:5px;background:var(--ink);animation:lpInk 4.8s ease-in-out ${(ri * 0.22 + ci * 0.11).toFixed(2)}s infinite`
+        }))
+      })),
+
+      heroFacts: [
+        { k: "Corre en su servidor", v: "El modelo y el índice viven dentro de la red. No hay llamada saliente que auditar." },
+        { k: "Responde con la página", v: "Cada afirmación trae el archivo y el localizador exacto. Sin fuente, no responde." },
+        { k: "Obedece al organigrama", v: "Lo que su rol no alcanza no se lee, no se resume y no se nombra." }
+      ].map((f, i) => ({ ...f, style: cell(i, 3) })),
+
+      steps: [
+        { n: "01", k: "Se instala junto a sus archivos", v: "Un nodo en el servidor que ya tiene. Lee las carpetas donde están los documentos hoy, sin moverlos ni renombrarlos." },
+        { n: "02", k: "Indexa y respeta los permisos", v: "Cada documento queda con su área y su clasificación. La consulta de una persona sólo recorre lo que su rol alcanza." },
+        { n: "03", k: "Contesta citando el folio", v: "La respuesta llega en segundos con el archivo y la página. Toda consulta y todo bloqueo quedan en bitácora." }
+      ].map((s, i) => ({
+        ...s,
+        style: `display:flex;gap:14px;padding:22px 0;` + (i ? `border-top:1px solid var(--line-soft);` : ``)
+      })),
+
+      pillars: [
+        {
+          who: "gerencia",
+          title: "La decisión deja de esperar al archivo",
+          body: "Lo que antes era pedir por correo y esperar dos días ahora es una pregunta escrita en palabras corrientes.",
+          items: ["respuesta en segundos", "sin depender de quién nombró la carpeta", "el mismo dato para todo el comité"]
+        },
+        {
+          who: "legal y cumplimiento",
+          title: "Tratamiento conforme a la Ley 21.719",
+          body: "Los datos personales no salen del país ni de la red. Cada consulta queda registrada con hora, persona y estación.",
+          items: ["bitácora inalterable y exportable", "retención configurable por área", "nada se entrena con sus documentos"]
+        },
+        {
+          who: "tecnología",
+          title: "Un nodo, sin salida a internet",
+          body: "Se despliega en su infraestructura y se integra con el directorio que ya usa para autenticar a la gente.",
+          items: ["instalación en sitio en un día", "roles desde su directorio corporativo", "sin conexión saliente que abrir"]
+        }
+      ].map((p, i) => ({ ...p, style: cell(i, 3) })),
+
+      faqs: [
+        { q: "¿Usa mis documentos para entrenar el modelo?", a: "No. El modelo llega entrenado y sólo los lee para responder esa consulta; nada de lo suyo se incorpora a él ni sale del nodo." },
+        { q: "¿Qué pasa si no encuentra la respuesta?", a: "Lo dice. El sistema no compone una respuesta sin un documento que la respalde: antes de inventar, prefiere declarar que no hay evidencia." },
+        { q: "¿Necesito comprar servidores nuevos?", a: "En la mayoría de los casos no. Revisamos su infraestructura antes de la demostración y le decimos con franqueza si el equipo que tiene alcanza." },
+        { q: "¿Puede ver mis documentos alguien de SoberanIA?", a: "No. El nodo es suyo y no expone acceso remoto, salvo que su área de TI habilite una ventana de soporte y la cierre después." }
+      ].map((f, i) => ({
+        ...f,
+        n: String(i + 1).padStart(2, "0"),
+        style: `display:flex;align-items:flex-start;gap:0;padding:22px 0;` + (i ? `border-top:1px solid var(--line-soft);` : ``)
+      })),
+
+      fields: [
+        { label: "nombre", ph: "Carla Navarro" },
+        { label: "cargo", ph: "Gerenta de administración" },
+        { label: "empresa", ph: "Grupo Andes Logística" },
+        { label: "correo corporativo", ph: "c.navarro@empresa.cl" }
+      ],
+      submitLabel: "solicitar demostración",
+      onSubmit: (e) => { e.preventDefault(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

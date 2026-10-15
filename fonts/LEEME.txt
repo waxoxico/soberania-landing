@@ -1,0 +1,7 @@
+Fuentes incluidas (subconjunto latino, licencia SIL Open Font License):
+
+Spectral-Regular.woff2 · Spectral-Italic.woff2 · Spectral-SemiBold.woff2 · Spectral-Bold.woff2
+Archivo.woff2 (variable, pesos 400–600)
+IBMPlexMono-Regular.woff2 · IBMPlexMono-Medium.woff2
+
+Se sirven desde este mismo sitio: la página no descarga nada de terceros.
