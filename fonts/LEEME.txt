@@ -1,7 +1,18 @@
-Fuentes incluidas (subconjunto latino, licencia SIL Open Font License):
+Fuentes que pide css/fonts.css (formato .woff2, nombres exactos).
 
-Spectral-Regular.woff2 · Spectral-Italic.woff2 · Spectral-SemiBold.woff2 · Spectral-Bold.woff2
-Archivo.woff2 (variable, pesos 400–600)
-IBMPlexMono-Regular.woff2 · IBMPlexMono-Medium.woff2
+Incluidas en esta carpeta:
+  Spectral-Regular.woff2
+  Spectral-Italic.woff2
+  Spectral-SemiBold.woff2
+  Spectral-Bold.woff2
+  IBMPlexMono-Regular.woff2
+  IBMPlexMono-Medium.woff2
 
-Se sirven desde este mismo sitio: la página no descarga nada de terceros.
+Debe agregarlas usted (por peso):
+  Archivo-Regular.woff2
+  Archivo-Medium.woff2
+  Archivo-SemiBold.woff2
+  Archivo-Bold.woff2
+
+Mientras falten las de Archivo, los textos de interfaz usan la fuente del sistema.
+Las tres familias tienen licencia SIL Open Font License y se pueden distribuir con el proyecto.

@@ -362,14 +362,24 @@ NOTAS
               </g>
 
               <g style="animation:lpFade 0.4s ease-out 0.9s both">
-                <sc-for list="{{ demoNodes }}" as="n" hint-placeholder-count="3">
-                  <g>
-                    <rect x="{{ n.x }}" y="150" width="80" height="44" fill="none" stroke="var(--ink)" stroke-width="1.4"></rect>
-                    <rect x="{{ n.x }}" y="150" width="80" height="7" fill="var(--red)"></rect>
-                    <text x="{{ n.tx }}" y="174" fill="var(--ink)" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px">{{ n.label }}</text>
-                    <text x="{{ n.tx }}" y="187" fill="var(--ink)" opacity="0.55" style="font-family:'IBM Plex Mono',monospace;font-size:8.5px">{{ n.page }}</text>
+                <g>
+                    <rect x="8" y="150" width="80" height="44" fill="none" stroke="var(--ink)" stroke-width="1.4"></rect>
+                    <rect x="8" y="150" width="80" height="7" fill="var(--red)"></rect>
+                    <text x="18" y="174" fill="var(--ink)" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px">{{ demoNode0Label }}</text>
+                    <text x="18" y="187" fill="var(--ink)" opacity="0.55" style="font-family:'IBM Plex Mono',monospace;font-size:8.5px">{{ demoNode0Page }}</text>
                   </g>
-                </sc-for>
+                <g>
+                    <rect x="113" y="150" width="80" height="44" fill="none" stroke="var(--ink)" stroke-width="1.4"></rect>
+                    <rect x="113" y="150" width="80" height="7" fill="var(--red)"></rect>
+                    <text x="123" y="174" fill="var(--ink)" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px">{{ demoNode1Label }}</text>
+                    <text x="123" y="187" fill="var(--ink)" opacity="0.55" style="font-family:'IBM Plex Mono',monospace;font-size:8.5px">{{ demoNode1Page }}</text>
+                  </g>
+                <g>
+                    <rect x="218" y="150" width="80" height="44" fill="none" stroke="var(--ink)" stroke-width="1.4"></rect>
+                    <rect x="218" y="150" width="80" height="7" fill="var(--red)"></rect>
+                    <text x="228" y="174" fill="var(--ink)" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px">{{ demoNode2Label }}</text>
+                    <text x="228" y="187" fill="var(--ink)" opacity="0.55" style="font-family:'IBM Plex Mono',monospace;font-size:8.5px">{{ demoNode2Page }}</text>
+                  </g>
               </g>
 
               <g style="animation:lpFade 0.4s ease-out 1.5s both">
@@ -529,7 +539,7 @@ NOTAS
     </div>
   </section>
 
-  <section data-r="section" id="contacto" style="padding:120px 0 0">
+  <section data-r="section" id="contacto" style="padding:120px 0 110px">
     <div style="height:5px;background:var(--ink)"></div>
     <div style="height:1px;background:var(--ink);margin-top:3px"></div>
 
@@ -539,21 +549,22 @@ NOTAS
         <p style="font-family:'Spectral',serif;font-size:18px;line-height:1.6;color:var(--muted);margin:22px 0 0;max-width:40ch">Los indexamos en su propia máquina durante la demostración y pregunta lo que quiera. Si al final del día no encuentra en segundos algo que hoy le toma horas, no seguimos.</p>
 
         <div style="display:flex;flex-direction:column;gap:9px;margin-top:30px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--muted)">
-          <div><a href="https://www.linkedin.com/in/soberan-ia-529a96443/" target="_blank" rel="noopener noreferrer">linkedin.com/in/soberan-ia</a></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px 22px">
+            <a href="https://www.linkedin.com/in/soberan-ia-529a96443/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" style="width:15px;height:15px;flex:none" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"></rect><rect x="6.2" y="10" width="2.6" height="7.6" fill="currentColor"></rect><circle cx="7.5" cy="6.9" r="1.6" fill="currentColor"></circle><path d="M11 10h2.5v1.2c.5-.9 1.6-1.4 2.8-1.4 2.1 0 3.1 1.3 3.1 3.6v4.2h-2.6v-3.8c0-1.1-.4-1.8-1.4-1.8-1 0-1.6.7-1.6 1.8v3.8H11z" fill="currentColor"></path></svg><span>linkedin.com/in/soberan-ia</span></a>
+            <a href="https://www.instagram.com/soberan_ai/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" style="width:15px;height:15px;flex:none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8"></rect><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="1.8"></circle><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"></circle></svg><span>@soberan_ai</span></a>
+          </div>
           <div>Chile · instalación en sitio</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:12px;margin-top:26px">
-          <span style="width:6px;height:6px;background:var(--red)"></span>
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--muted)">equipo de cuatro personas · ingeniería, seguridad y cumplimiento</span>
         </div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:16px;border:2px solid var(--ink);padding:26px 26px 24px">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">agende su demostración</div>
-        <div style="font-family:'Spectral',serif;font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-0.015em">Escríbanos por LinkedIn.</div>
+        <div style="font-family:'Spectral',serif;font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-0.015em">Escríbanos por LinkedIn o Instagram.</div>
         <div style="font-size:15px;line-height:1.55;color:var(--muted)">Cuéntenos su nombre, cargo, empresa y cuántos documentos tiene, aproximadamente. Coordinamos la fecha por ahí.</div>
-        <a href="https://www.linkedin.com/in/soberan-ia-529a96443/" target="_blank" rel="noopener noreferrer" style="align-self:flex-start;border:0;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;padding:15px 26px" style-hover="background:var(--red);color:var(--paper)">abrir SoberanIA en LinkedIn ↗</a>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <a href="https://www.linkedin.com/in/soberan-ia-529a96443/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;border:0;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;padding:14px 22px" style-hover="background:var(--red);color:var(--paper)"><svg viewBox="0 0 24 24" style="width:15px;height:15px;flex:none" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"></rect><rect x="6.2" y="10" width="2.6" height="7.6" fill="currentColor"></rect><circle cx="7.5" cy="6.9" r="1.6" fill="currentColor"></circle><path d="M11 10h2.5v1.2c.5-.9 1.6-1.4 2.8-1.4 2.1 0 3.1 1.3 3.1 3.6v4.2h-2.6v-3.8c0-1.1-.4-1.8-1.4-1.8-1 0-1.6.7-1.6 1.8v3.8H11z" fill="currentColor"></path></svg><span>escribir por LinkedIn ↗</span></a>
+          <a href="https://www.instagram.com/soberan_ai/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;padding:13px 20px" style-hover="border-color:var(--red);color:var(--red)"><svg viewBox="0 0 24 24" style="width:15px;height:15px;flex:none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8"></rect><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="1.8"></circle><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"></circle></svg><span>seguir en Instagram ↗</span></a>
+        </div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.6;letter-spacing:0.06em;color:var(--muted)">usamos sus datos sólo para coordinar la demostración · no se comparten con terceros</div>
       </div>
     </div>
@@ -695,12 +706,10 @@ class Component extends DCLogic {
         title: s.title,
         style: `display:flex;flex-direction:column;gap:4px;padding-left:11px;border-left:2px solid var(--red);min-width:210px`
       })),
-      demoNodes: d.nodes.map((n, k) => ({
-        label: n.label,
-        page: n.page,
-        x: 8 + k * 105,
-        tx: 18 + k * 105
-      })),
+      // Los tres documentos del esquema tienen coordenadas fijas en la plantilla; aquí sólo van sus textos.
+      demoNode0Label: (d.nodes[0] || {}).label || "", demoNode0Page: (d.nodes[0] || {}).page || "",
+      demoNode1Label: (d.nodes[1] || {}).label || "", demoNode1Page: (d.nodes[1] || {}).page || "",
+      demoNode2Label: (d.nodes[2] || {}).label || "", demoNode2Page: (d.nodes[2] || {}).page || "",
       // El costado reserva su sitio: sin salto de altura cuando entra el esquema.
       demoPending: !answered,
       demoPendingNote: st.phase === "thinking"

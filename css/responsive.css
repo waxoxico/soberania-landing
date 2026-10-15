@@ -12,6 +12,7 @@
   [data-r="theme"] { margin-left: auto !important; }
   [data-r="hero"] { padding-top: 64px !important; }
   [data-r="section"] { padding-top: 88px !important; }
+  #contacto { padding-bottom: 80px !important; }
   [data-r="h2"] { font-size: clamp(28px, 5.6vw, 42px) !important; }
 
   /* Dos columnas → una */
@@ -40,6 +41,7 @@
   [data-r="h1"] { font-size: clamp(40px, 12vw, 60px) !important; margin-top: 20px !important; }
   [data-r="hero"] [data-r="cols3"] { margin-top: 44px !important; }
   [data-r="section"] { padding-top: 72px !important; }
+  #contacto { padding-bottom: 64px !important; }
   [data-r="console-main"] { padding: 18px 16px 22px !important; }
   [data-r="console"] > aside, [data-r="console"] > *:last-child { padding: 18px 16px 22px !important; }
 
